@@ -1,0 +1,9 @@
+body {
+  background-image: url('img/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-position: left center; */
+  /* border: 1px solid transparent; */
+  /* width: 500px; */
+  /* height: 500px; */
+}
