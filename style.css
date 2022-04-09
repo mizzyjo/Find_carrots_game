@@ -1,9 +1,69 @@
 body {
+  margin: 0;
   background-image: url('img/background.png');
   background-size: cover;
   background-repeat: no-repeat;
-  /* background-position: left center; */
-  /* border: 1px solid transparent; */
-  /* width: 500px; */
-  /* height: 500px; */
+}
+
+button {
+  background-color: blanchedalmond;
+  border: 3px solid;
+  border-radius: 20%;
+  font-size: 35px;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+}
+
+.game {
+  margin-top: 8px;
+}
+.game__header, .pop-up {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game__timer {
+  background-color: white;
+  line-height: 40px;
+  text-align: center;
+  font-size: 30px;
+  border: 3px solid black;
+  border-radius: 10px;
+  width: 140px;
+  height: 40px;
+  margin: 4px;
+}
+
+.game__score {
+  background: sandybrown;
+  color: white;
+  font-size: 40px;
+  line-height: 80px;
+  text-align: center;
+  border: 3px solid black;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+.pop-up {
+  background-color: rgba(0,0,0, 0.4);
+  width: 500px;
+  height: 150px;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 70px;
+}
+
+.pop-up__refresh {
+  margin-top: 8px;
+  margin-bottom: 3px;
+}
+
+.pop-up__message {
+  color: white;
+  font-size: 40px;
+
 }
