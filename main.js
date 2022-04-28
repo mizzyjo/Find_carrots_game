@@ -81,7 +81,19 @@ function showTimerAndScore() {
   gameScore.style.visibility = 'visible';
 }
 
-function startGameTimer() {}
+function startGameTimer() {
+  let currentSecond = 5;
+  let playTimer;
+  const playHandler = () => {
+    if (currentSecond === 0) {
+      clearInterval(playTimer);
+    }
+    gameTimer.textContent = `${currentSecond}:0`;
+    console.log(`${currentSecond}초 남았습니다.`);
+    currentSecond = currentSecond - 1;
+  };
+  playTimer = setInterval(playHandler, 1000);
+}
 
 function initGame() {
   field.innerHTML = ``;
