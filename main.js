@@ -82,17 +82,21 @@ function showTimerAndScore() {
 }
 
 function startGameTimer() {
-  let currentSecond = 5;
-  let playTimer;
-  const playHandler = () => {
-    if (currentSecond === 0) {
-      clearInterval(playTimer);
+  let remainingTimeSec = GAME_DURATION_SEC;
+  updateTimerText(remainingTimeSec);
+  timer = setInterval(() => {
+    if (remainingTimeSec <= 0) {
+      clearInterval(timer);
+      return;
     }
-    gameTimer.textContent = `${currentSecond}:0`;
-    console.log(`${currentSecond}초 남았습니다.`);
-    currentSecond = currentSecond - 1;
-  };
-  playTimer = setInterval(playHandler, 1000);
+    updateTimerText(--remainingTimeSec);
+  }, 1000);
+}
+
+function updateTimerText(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  gameTimer.innerText = `${minutes}:${seconds}`;
 }
 
 function initGame() {
