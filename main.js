@@ -38,10 +38,13 @@
 'use strict';
 
 const CARROT_SIZE = 80;
+
 const field = document.querySelector('.game__field');
 const fieldRect = field.getBoundingClientRect();
+const gameBtn = document.querySelector('.game__button');
 
 function initGame() {
+  field.innerHTML = ``;
   // 벌레와 당근을 생성한 뒤 field에 추가해줌
   console.log(fieldRect);
   addItem('carrot', 5, 'img/carrot.png');
@@ -71,4 +74,17 @@ function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-initGame();
+// initGame();
+
+const timer = document.querySelector('.game__timer');
+const score = document.querySelector('.game__score');
+const startBtn = document.querySelector('.game__button');
+
+startBtn.addEventListener('click', (event) => {
+  timer.classList.toggle('clicked');
+  score.classList.toggle('clicked');
+  initGame();
+  let carrots = document.querySelectorAll('.carrot');
+  score.textContent = carrots.length;
+  startBtn.firstChild.className = 'fas fa-stop';
+});
