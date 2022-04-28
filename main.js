@@ -38,17 +38,58 @@
 'use strict';
 
 const CARROT_SIZE = 80;
+const CARROT_COUNT = 5;
+const BUG_COUNT = 5;
+const GAME_DURATION_SEC = 5;
 
 const field = document.querySelector('.game__field');
 const fieldRect = field.getBoundingClientRect();
 const gameBtn = document.querySelector('.game__button');
+const gameTimer = document.querySelector('.game__timer');
+const gameScore = document.querySelector('.game__score');
+
+let started = false;
+let score = 0;
+let timer = undefined;
+
+gameBtn.addEventListener('click', () => {
+  if (started) {
+    stopGame();
+  } else {
+    startGame();
+  }
+  started = !started;
+});
+
+function startGame() {
+  initGame();
+  showStopButton();
+  showTimerAndScore();
+  startGameTimer();
+}
+
+function stopGame() {}
+
+function showStopButton() {
+  const icon = gameBtn.querySelector('.fa-play');
+  icon.classList.add('fa-stop');
+  icon.classList.remove('fa-play');
+}
+
+function showTimerAndScore() {
+  gameTimer.style.visibility = 'visible';
+  gameScore.style.visibility = 'visible';
+}
+
+function startGameTimer() {}
 
 function initGame() {
   field.innerHTML = ``;
+  gameScore.innerText = CARROT_COUNT;
   // 벌레와 당근을 생성한 뒤 field에 추가해줌
   console.log(fieldRect);
-  addItem('carrot', 5, 'img/carrot.png');
-  addItem('bug', 5, 'img/bug.png');
+  addItem('carrot', CARROT_COUNT, 'img/carrot.png');
+  addItem('bug', BUG_COUNT, 'img/bug.png');
 }
 
 function addItem(className, count, imgPath) {
@@ -76,15 +117,15 @@ function randomNumber(min, max) {
 
 // initGame();
 
-const timer = document.querySelector('.game__timer');
-const score = document.querySelector('.game__score');
-const startBtn = document.querySelector('.game__button');
+// const timer = document.querySelector('.game__timer');
+// const score = document.querySelector('.game__score');
+// const startBtn = document.querySelector('.game__button');
 
-startBtn.addEventListener('click', (event) => {
-  timer.classList.toggle('clicked');
-  score.classList.toggle('clicked');
-  initGame();
-  let carrots = document.querySelectorAll('.carrot');
-  score.textContent = carrots.length;
-  startBtn.firstChild.className = 'fas fa-stop';
-});
+// startBtn.addEventListener('click', (event) => {
+//   timer.classList.toggle('clicked');
+//   score.classList.toggle('clicked');
+//   initGame();
+//   let carrots = document.querySelectorAll('.carrot');
+//   score.textContent = carrots.length;
+//   startBtn.firstChild.className = 'fas fa-stop';
+// });
