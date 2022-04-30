@@ -59,6 +59,7 @@ gameBtn.addEventListener('click', () => {
     startGame();
   }
   started = !started;
+  console.log(`started value : ${started}`);
 });
 
 function startGame() {
@@ -68,7 +69,20 @@ function startGame() {
   startGameTimer();
 }
 
-function stopGame() {}
+function stopGame() {
+  const icon = gameBtn.querySelector('.fa-stop');
+  const popup = document.querySelector('.pop-up');
+  clearInterval(timer);
+  icon.classList.add('fa-play');
+  icon.classList.remove('fa-stop');
+  popup.classList.remove('pop-up--hide');
+}
+
+const popup = document.querySelector('.pop-up');
+
+function showPopUp() {
+  popup.classList.remove('pop-up--hide');
+}
 
 function showStopButton() {
   const icon = gameBtn.querySelector('.fa-play');
@@ -85,6 +99,7 @@ function startGameTimer() {
   let remainingTimeSec = GAME_DURATION_SEC;
   updateTimerText(remainingTimeSec);
   timer = setInterval(() => {
+    console.log(`timer value: ${remainingTimeSec}`);
     if (remainingTimeSec <= 0) {
       clearInterval(timer);
       return;
