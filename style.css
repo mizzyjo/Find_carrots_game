@@ -77,6 +77,10 @@ button {
   /* opacity: 0.4; */
 }
 
+.cursor-block {
+  pointer-events: none;
+}
+
 .pop-up {
   display: block;
   width: 400px;

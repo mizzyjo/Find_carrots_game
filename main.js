@@ -15,6 +15,10 @@ const popUp = document.querySelector('.pop-up');
 const popUpText = document.querySelector('.pop-up__message');
 const popUpRefresh = document.querySelector('.pop-up__refresh');
 
+const carrots = document.querySelectorAll('.carrot');
+
+let carrotsCounter = Number(gameScore.innerText);
+
 let started = false;
 let score = 0;
 let timer = undefined;
@@ -32,19 +36,22 @@ gameBtn.addEventListener('click', () => {
 });
 
 popUpRefresh.addEventListener('click', () => {
+  console.log('refresh btn clicked');
   if (started) {
     stopGame();
   } else {
     refreshGame();
   }
+  started = !started;
 });
 
 function refreshGame() {
   hidePopUp();
-  initGame();
-  // stopGameTimer();
+  // initGame();
   showStartButton();
-  startGameTimer();
+  // startGameTimer();
+  startGame();
+  assignIdToIcons();
 }
 
 function hidePopUp() {
@@ -58,17 +65,49 @@ function showStartButton() {
   gameBtn.style.visibility = 'visible';
 }
 
+function assignIdToIcons() {
+  const carrots = document.querySelectorAll('.carrot');
+  let carrotId = 0;
+
+  carrots.forEach((carrot) => {
+    carrot.id = `carrot${carrotId}`;
+    carrotId++;
+  });
+}
+
+function handleCarrotsAndBugsOnClick() {
+  field.addEventListener('click', (e) => {
+    console.log(e);
+    console.log(e.target.id);
+
+    if (e.target.className === 'bug') {
+      stopGame();
+    } else if (e.target.className === 'carrot') {
+      let tmpCarrot = document.querySelector(`#${e.target.id}`);
+      tmpCarrot.remove();
+      carrotsCounter = Number(gameScore.innerText) - 1;
+      gameScore.innerText = carrotsCounter;
+    }
+  });
+}
+
 function startGame() {
+  field.classList.remove('cursor-block');
+
   initGame();
+  assignIdToIcons();
   showStopButton();
   showTimerAndScore();
   startGameTimer();
+
+  handleCarrotsAndBugsOnClick();
 }
 
 function stopGame() {
   stopGameTimer();
   hideGameButton();
   showPopUpWithText('REPLAY?');
+  field.classList.add('cursor-block');
 }
 
 function showStopButton() {
@@ -93,6 +132,7 @@ function startGameTimer() {
     console.log(`timer value: ${remainingTimeSec}`);
     if (remainingTimeSec <= 0) {
       clearInterval(timer);
+      stopGame();
       return;
     }
     updateTimerText(--remainingTimeSec);
