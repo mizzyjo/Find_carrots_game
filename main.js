@@ -15,6 +15,12 @@ const popUp = document.querySelector('.pop-up');
 const popUpText = document.querySelector('.pop-up__message');
 const popUpRefresh = document.querySelector('.pop-up__refresh');
 
+const carrotSound = new Audio('./sound/carrot_pull.mp3');
+const alertSound = new Audio('./sound/alert.wav');
+const bgSound = new Audio('./sound/bg.mp3');
+const bugSound = new Audio('./sound/bug_pull.mp3');
+const winSound = new Audio('./sound/game_win.mp3');
+
 let started = false;
 let score = 0;
 let timer = undefined;
@@ -40,26 +46,32 @@ popUpRefresh.addEventListener('click', () => {
 
 function startGame() {
   started = true;
-
   initGame();
   showStopButton();
   showTimerAndScore();
   startGameTimer();
+  playSound(bgSound);
 }
 
 function stopGame() {
   started = false;
-
   stopGameTimer();
   hideGameButton();
   showPopUpWithText('REPLAY?');
+  playSound(alertSound);
+  stopSound(bgSound);
 }
 
 function finishGame(win) {
   started = false;
   hideGameButton();
+  if (win) {
+    playSound(winSound);
+  } else {
+    playSound(bugSound);
+  }
   stopGameTimer();
-
+  stopSound(bgSound);
   showPopUpWithText(win ? 'YOU WON' : 'YOU LOST');
 }
 
@@ -134,6 +146,7 @@ function onFieldClick(event) {
     console.log('당근');
     target.remove();
     score++;
+    playSound(carrotSound);
     updateScoreBoard();
     if (score === CARROT_COUNT) {
       finishGame(true);
@@ -145,13 +158,17 @@ function onFieldClick(event) {
   }
 }
 
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+function stopSound(sound) {
+  sound.pause();
+}
+
 function updateScoreBoard() {
   gameScore.innerText = CARROT_COUNT - score;
-  console.log('===================================');
-  console.log(`CARROUT COUNT ${CARROT_COUNT}`);
-  console.log(`score ${score}`);
-  console.log(`CAR - score = ${CARROT_COUNT - score}`);
-  console.log('===================================');
 }
 
 function addItem(className, count, imgPath) {
