@@ -47,9 +47,7 @@ popUpRefresh.addEventListener('click', () => {
 
 function refreshGame() {
   hidePopUp();
-  // initGame();
   showStartButton();
-  // startGameTimer();
   startGame();
   assignIdToIcons();
 }
@@ -88,7 +86,25 @@ function handleCarrotsAndBugsOnClick() {
       carrotsCounter = Number(gameScore.innerText) - 1;
       gameScore.innerText = carrotsCounter;
     }
+
+    checkCarrotsCount();
   });
+}
+
+function checkCarrotsCount() {
+  const carrots = document.querySelectorAll('.carrot');
+
+  if (carrots.length == 0) {
+    console.log(`carrot is undefined`);
+    stopGame();
+  }
+}
+
+function wonGame() {
+  stopGameTimer();
+  hideGameButton();
+  showPopUpWithText('YOU WON!');
+  field.classList.add('cursor-block');
 }
 
 function startGame() {
